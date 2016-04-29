@@ -1,4 +1,5 @@
 //コントローラー
+<<<<<<< HEAD
 import java.awt.Graphics;//サンプルよう
 import java.awt.Graphics2D;//サンプル用
 import java.awt.event.MouseEvent;
@@ -56,3 +57,6 @@ public class NumberFallController extends JApplet implements MouseListener {
     public void mouseReleased(MouseEvent e) {
     }
 }
+=======
+
+>>>>>>> 923471f004de1ae471ab832bc09e083b481bc503
