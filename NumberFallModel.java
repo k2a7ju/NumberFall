@@ -1,1 +1,7 @@
 //モデル
+
+class NumberFallModel {
+
+
+
+}
