@@ -1,14 +1,15 @@
 /*
   Modelの実装
 */
+import java.util.*;
 
 class NumberFallModel {
     //NumberFallView view;
     //NumberFallController controller;
-    
+    private static final int MAX = 6;
     int score; //スコアを管理するための変数
     int itemQuantity; //アイテムの個数を管理する
-    int[][] fieldNumber = new int[6][6]; //ボックスにどの値が格納されているかどうか管理するための配列
+    int[][] fieldNumber = new int[MAX][MAX]; //ボックスにどの値が格納されているかどうか管理するための配列
     int level; //レベルを管理するための変数
     int nowPanelFlag; //今の画面状況を管理するためのフラグ
     /*
@@ -19,6 +20,12 @@ class NumberFallModel {
     */
     //配列に乱数で得た値を格納する
     public void createNewStage(){
+	Random rand = new Random();
+	for(int i = 0; i < MAX; i++){
+	    for(int j = 0; j < MAX; j++){
+		fieldNumber[i][j] = rand.nextInt(9);
+	    }
+	}
     }
     //アイテムが使われたかどうかをチェック
     public void checkItem(){
@@ -75,5 +82,6 @@ class NumberFallModel {
     
     public static void main(String[] args){
 	NumberFallModel model = new NumberFallModel();
+	model.createNewStage();
     }
 }
