@@ -11,7 +11,15 @@ public class NumberFallController extends JFrame implements MouseListener{
     private int xa=64,ya=64;
     private int box1=0,box2=0;
 
-  public void mouseClicked(MouseEvent e){
+    public void checkPair(int box1,int box2){
+	if(box1==box2-1||box1==box2+1){
+
+	}else{
+	    
+	}
+    }
+	
+    public void mouseClicked(MouseEvent e){
       x = e.getX();
       y = e.getY();
       int boxnumber=1;
@@ -33,8 +41,7 @@ public class NumberFallController extends JFrame implements MouseListener{
 	  }   
       }
       if(box1!=0&&box2!=0){
-	  box1=0;
-	  box2=0;
+	  checkPair(box1,box2);
       }
   }
 
