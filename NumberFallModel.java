@@ -223,7 +223,7 @@ class NumberFallModel {
 	this.nowPanelFlag = flag;
     }
     
-    
+    /*
     //デバッグ用
     public void printField(){
 	for(int i = 0; i < BOX_MAX; i++){
@@ -247,4 +247,5 @@ class NumberFallModel {
 	System.out.printf("\n乱数で埋める\n");
 	model.addNumber();
     }
+    */
 }
