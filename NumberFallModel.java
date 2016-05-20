@@ -14,15 +14,15 @@ class NumberFallModel {
     private int[][] boxNumber = new int[BOX_MAX][BOX_MAX];
     private int level; //レベルを管理するための変数
     private int nowPanelFlag; //今の画面状況を管理するためのフラグ
-
+    
     private int buffX = 0;
     private int buffY = 0;
-
+    
     //コンストラクタ
     public NumberFallModel(){
         decideBoxNumber();
     }
-
+    
     //配列に乱数で得た値を格納する
     public void createNewStage(){
 	Random rand = new Random();
@@ -33,7 +33,7 @@ class NumberFallModel {
 	}
 	printField();
     }
-
+    
     //ボックス番号→配列
     public void boxNumberToArray(int boxNum){
 	for(int i = 0; i < BOX_MAX; i++){
@@ -41,7 +41,7 @@ class NumberFallModel {
 		if(boxNumber[i][j] == boxNum){
 		    this.buffX = j;
 		    this.buffY = i;
-		   
+		    
 		    return;
 		}
 	    }
@@ -50,7 +50,7 @@ class NumberFallModel {
 
     //配列→ボックス番号
     public int arrayToBoxNumber(int x, int y){
-	 System.out.println(boxNumber[y][x]);
+	System.out.println(boxNumber[y][x]);
 	return boxNumber[y][x];
     }
     
@@ -63,7 +63,7 @@ class NumberFallModel {
 	    System.out.println("使えない");
 	}
     }
-
+    
     //配列に格納されている値をシャッフルする
     public void shuffleField(){
 	Random rand = new Random();
@@ -88,14 +88,25 @@ class NumberFallModel {
 	boxNumberToArray(boxY);
 	fieldNumber[buffY][buffX] = EMPTY;
     }
-
-    //削除された分の乱数を生成し、新たに格納
-    public void addNumber(int x, int y){
+  
+    //EMPTYに乱数を挿入する
+    public void addNumber(){
+	for(int i = 0; i < BOX_MAX; i++){
+	    for(int j = 0;j < BOX_MAX; j++){
+		if(this.fieldNumber[i][j] == EMPTY){
+		    this.fieldNumber[i][j] = addRandomNumber();
+		}
+	    }
+	}
+	this.printField();
+    }
+    //削除された分の乱数を生成する
+    public int addRandomNumber(){
 	Random rand = new Random();
 	int random = rand.nextInt(BOX_MAX);
-	fieldNumber[y][x] = random;
-     }
-
+	return random;
+    }
+    
     //削除された上部分にペアがないかを判断して値を削除    
     public void checkField(int boxX,int boxY){
 	//boxX側の上
@@ -105,32 +116,61 @@ class NumberFallModel {
     //上にペアがないか見てあればEMPTYを挿入
     public void upRemove(int boxNum){
 	boxNumberToArray(boxNum);
-	int buffUpBox = 0;
-        int buffDownBox = 0;
+	int x = buffX;
+	int y = buffY;
+	int buffUpBox;
+        int buffDownBox;
 	buffUpBox = buffY;
-        for(int i = buffY; buffUpBox - 1 >= 0; i--){
+        for(int i = y; buffUpBox - 1 >= 0; i--){
             buffUpBox = i - 2;
             buffDownBox = i - 1;
-	    System.out.println("チェック : "+ fieldNumber[buffUpBox][this.buffX] +", "+fieldNumber[buffDownBox][this.buffX]);
-            if(fieldNumber[buffUpBox][this.buffX] == fieldNumber[buffDownBox][this.buffX]){
-		fieldNumber[buffUpBox][this.buffX] = EMPTY;
-		fieldNumber[buffDownBox][this.buffX] = EMPTY;
+	    //System.out.println("チェック : "+ fieldNumber[buffUpBox][x] +", "+fieldNumber[buffDownBox][x]);
+            if(fieldNumber[buffUpBox][x] == fieldNumber[buffDownBox][x]){
+		fieldNumber[buffUpBox][x] = EMPTY;
+		fieldNumber[buffDownBox][x] = EMPTY;
             }
         }
 	return;
     }
-    public void fallNumber(){
-	for(int i = 0; i < BOX_MAX; i++){
-	    for(int j = 0; j < BOX_MAX; j++){
-		if(boxNumber[i][j] == 128){}
+    public void fallNumber(int boxX, int boxY){
+	this.fall(boxX);
+	this.fall(boxY);
+	return;
+    }
+    public void fall(int boxNum){
+	int[] buff = new int[6];
+	int count = 0;
+	int count2 = 0;
+	this.boxNumberToArray(boxNum);
+	int x = this.buffX;
+	//一時的に別配列へ移動
+	for(int i = BOX_MAX - 1; i >= 0; i--){
+	    if(this.fieldNumber[i][x] != EMPTY){
+		buff[count] = fieldNumber[i][x];
+		count++;
 	    }
 	}
+	//System.out.println("count = "+ count);
+	//配列に入っているのを戻す
+	for(int i = BOX_MAX - 1; i >= 0; i--){
+	    if(count2 < count){
+		this.fieldNumber[i][x] = buff[count2];
+	    }
+	    else{
+		this.fieldNumber[i][x] = EMPTY;
+	    }
+	    count2++;
+	    //System.out.println("count2 = "+count2);
+	}
+		
+	return;
     }
+
     //スコア計算を行う
     public void caluculateScore(int number,int kosu){
-        int zenscore=getScore();
+        int zenscore = getScore();
         if(kosu==2){
-            zenscore=number*10+zensocre;
+            zenscore=number*10+zenscore;
         }else{
             zenscore=number*20+zenscore;
         }
@@ -140,6 +180,7 @@ class NumberFallModel {
     public void checkLevel(){
 	
     }
+
     //ボックスに番号を振り分ける
     public void decideBoxNumber(){
         int count = 1;
@@ -198,8 +239,12 @@ class NumberFallModel {
 	model.createNewStage();
 	model.removeNumber(31,32);
 	model.checkField(31,32);
-		
-	System.out.printf("\n");
+	System.out.printf("\nEMPTY追加後\n");
 	model.printField();
+	model.fallNumber(31,32);
+	System.out.printf("\nfallNumber後\n");
+	model.printField();
+	System.out.printf("\n乱数で埋める\n");
+	model.addNumber();
     }
 }
