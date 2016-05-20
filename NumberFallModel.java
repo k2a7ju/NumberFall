@@ -97,8 +97,27 @@ class NumberFallModel {
      }
 
     //削除された上部分にペアがないかを判断して値を削除    
-    public void checkField(){
-	
+    public void checkField(int boxX,int boxY){
+	//boxX側の上
+	upRemove(boxX);
+	upRemove(boxY);
+    }
+    //上にペアがないか見てあればEMPTYを挿入
+    public void upRemove(int boxNum){
+	boxNumberToArray(boxNum);
+	int buffUpBox = 0;
+        int buffDownBox = 0;
+	buffUpBox = buffY;
+        for(int i = buffY; buffUpBox - 1 >= 0; i--){
+            buffUpBox = i - 2;
+            buffDownBox = i - 1;
+	    System.out.println("チェック : "+ fieldNumber[buffUpBox][this.buffX] +", "+fieldNumber[buffDownBox][this.buffX]);
+            if(fieldNumber[buffUpBox][this.buffX] == fieldNumber[buffDownBox][this.buffX]){
+		fieldNumber[buffUpBox][this.buffX] = EMPTY;
+		fieldNumber[buffDownBox][this.buffX] = EMPTY;
+            }
+        }
+	return;
     }
     public void fallNumber(){
 	for(int i = 0; i < BOX_MAX; i++){
@@ -107,15 +126,15 @@ class NumberFallModel {
 	    }
 	}
     }
-    //スコアの計算を行う
+    //スコア計算を行う
     public void caluculateScore(int number,int kosu){
-	int zenscore=getScore();
-	if(kosu==2){
-	    zenscore=number*10+zensocre;
-	}else{
-	    zenscore=number*20+zenscore;
-	}
-	setScore(zenscore);
+        int zenscore=getScore();
+        if(kosu==2){
+            zenscore=number*10+zensocre;
+        }else{
+            zenscore=number*20+zenscore;
+        }
+        setScore(zenscore);
     }
     //レベルアップするかどうか
     public void checkLevel(){
@@ -168,15 +187,17 @@ class NumberFallModel {
     public void printField(){
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
-		System.out.printf("%d ",fieldNumber[i][j]);
+		System.out.printf("%d\t",fieldNumber[i][j]);
 	    }
 	    System.out.printf("\n");
 	}
+	    System.out.printf("\n");
     }
     public static void main(String[] args){
 	NumberFallModel model = new NumberFallModel();
 	model.createNewStage();
 	model.removeNumber(31,32);
+	model.checkField(31,32);
 		
 	System.out.printf("\n");
 	model.printField();
