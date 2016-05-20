@@ -109,11 +109,13 @@ class NumberFallModel {
     }
     //スコアの計算を行う
     public void caluculateScore(int number,int kosu){
+	int zenscore=getScore();
 	if(kosu==2){
-	    score=number*10+socre;
+	    zenscore=number*10+zensocre;
 	}else{
-	    score=number*20+score;
+	    zenscore=number*20+zenscore;
 	}
+	setScore(zenscore);
     }
     //レベルアップするかどうか
     public void checkLevel(){
