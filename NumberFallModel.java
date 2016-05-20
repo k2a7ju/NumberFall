@@ -108,8 +108,12 @@ class NumberFallModel {
 	}
     }
     //スコアの計算を行う
-    public void caluculateScore(){
-	
+    public void caluculateScore(int number,int kosu){
+	if(kosu==2){
+	    score=number*10+socre;
+	}else{
+	    score=number*20+score;
+	}
     }
     //レベルアップするかどうか
     public void checkLevel(){
