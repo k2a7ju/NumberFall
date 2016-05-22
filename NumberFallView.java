@@ -2,8 +2,10 @@
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-class NumberFallView {
+class NumberFallView extends NumberFallController{
     private static final int WINDOW_WIDTH = 640;
     private static final int WINDOW_HEIGHT = 480;
     private GameFieldPanel gameFieldPanel;
@@ -20,6 +22,7 @@ class NumberFallView {
 	frame.setLayout(null);
 
 	gameFieldPanel = new GameFieldPanel();
+	gameFieldPanel.addMouseListener(this);
 	gameFieldPanel.setBounds(28,48,385,385);
 	frame.add(gameFieldPanel);
 
@@ -51,8 +54,8 @@ class NumberFallView {
 	
 	frame.setVisible(true);
     }
-
     public static void main(String[] args) {
-	NumberFallView app = new NumberFallView();
+       NumberFallView app = new NumberFallView();
     }
+
 }
