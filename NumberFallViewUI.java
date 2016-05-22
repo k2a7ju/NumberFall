@@ -49,7 +49,7 @@ class NumberFallViewUI {
             }
      	}
     
-class NumberFallView {
+class NumberFallView extend NumberFallController {
 	private static final int WINDOW_WIDTH = 640;
 	private static final int WINDOW_HEIGHT = 480;
 	static GameFieldPanel gameFieldPanel;
@@ -67,6 +67,7 @@ class NumberFallView {
         
             gameFieldPanel = new GameFieldPanel();
             gameFieldPanel.setBounds(28,48,385,385);
+	    gameFieldPanel.addMouseListener(this);
             frame.add(gameFieldPanel);
             
             scoreLabels[0] = new JLabel("GAMELEVEL :       1");
