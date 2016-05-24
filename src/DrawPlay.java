@@ -27,6 +27,7 @@ public class DrawPlay {
 	frame.setLayout(null);
         
 	gameFieldPanel = new GameFieldPanel(this.model, this.fieldNumber);
+	gameFieldPanel.addMouseListener(controller);
 	gameFieldPanel.setBounds(28,48,385,385);
 	frame.add(gameFieldPanel);
         
