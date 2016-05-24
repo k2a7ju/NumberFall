@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
 
 public class NumberFallController implements MouseListener{
 
@@ -13,6 +14,7 @@ public class NumberFallController implements MouseListener{
     private int y = 0;
     private int xa=64,ya=64;
     private int box1=0,box2=0;
+    private Point pointxy=new Point(0,0);
 
     public void checkPair(int box1,int box2){
 	if(box1==box2-1||box1==box2+1){
@@ -23,10 +25,14 @@ public class NumberFallController implements MouseListener{
 	box1=0;
 	box2=0;
     }
+    public Point getPointxy(){
+	return pointxy;
+    }
 	
     public void mouseClicked(MouseEvent e){
       x = e.getX();
       y = e.getY();
+      pointxy=e.getPoint();
       int boxnumber=1;
       System.out.println("X = "+x+"Y = "+y);
       for(int j=0;j<384;j=j+ya){
