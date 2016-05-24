@@ -28,6 +28,12 @@ public class NumberFallController implements MouseListener{
     public Point getPointxy(){
 	return pointxy;
     }
+    public int getbox1(){
+	return box1;
+    }
+    public int getbox2(){
+	return box2;
+    }
 	
     public void mouseClicked(MouseEvent e){
       x = e.getX();
