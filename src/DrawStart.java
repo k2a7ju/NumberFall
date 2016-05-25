@@ -5,8 +5,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class DrawStart {
-    private NumberFallModel model;
-    private NumberFallController controller;
+   
     private static final int WINDOW_WIDTH = 640;
     private static final int WINDOW_HEIGHT = 480;
     private static final int BOX_MAX = 36 + 1;
@@ -19,20 +18,12 @@ public class DrawStart {
     private JLabel byougaLabels;
     private JButton NumbershuffleButton;
     private JButton GameCloseButton;
-
-    private int[] fieldNumber = new int[BOX_MAX];
-    private int score;
-    private DrawPlay play = new DrawPlay();
     
-    public DrawStart(NumberFallModel model, NumberFallController controller, int[] number,int score){
-	this.model = model;
-	this.controller = controller;
-	this.fieldNumber = number;
-	this.score = score;
-	play.setController(this.controller);
-	play.setModel(this.model);
+    private DrawPlay play;
+    
+    public DrawStart(DrawPlay play){
+	this.play = play;
     }
-    
     public void draw(){
 
 	JFrame frame = new JFrame();
@@ -50,7 +41,7 @@ public class DrawStart {
 	gameStartButton.setFocusable(false);
 	gameStartButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-		    play.setValue(fieldNumber,score);
+		    
 		    play.draw();
 		    frame.dispose();
 		}

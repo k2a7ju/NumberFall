@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.event.*;
 public class DrawPlay {
@@ -18,8 +16,14 @@ public class DrawPlay {
     private int[] fieldNumber = new int[BOX_MAX];
     private int score = 123;
    
+    public DrawPlay(NumberFallModel model, NumberFallController controller, int[] fieldNumber,int score){
+	this.model = model;
+	this.controller = controller;
+	this.fieldNumber = fieldNumber;
+	this.score = score;
+    }
     public void draw() {
-	
+	this.fieldNumber = model.getThrowNumber();
 	JFrame frame = new JFrame();
 	frame.setTitle("NumberFall");
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,6 +31,7 @@ public class DrawPlay {
 	frame.setLayout(null);
         
 	gameFieldPanel = new GameFieldPanel(this.model, this.fieldNumber);
+	gameFieldPanel.addMouseListener(controller);
 	gameFieldPanel.setBounds(28,48,385,385);
 	frame.add(gameFieldPanel);
         

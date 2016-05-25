@@ -10,7 +10,7 @@ class NumberFallModel {
  
     private static final int BOX_MAX = 6;
     private static final int EMPTY = 184;
-    private int score =1000; //スコアを管理するための変数
+    private int score; //スコアを管理するための変数
     private int itemQuantity; //アイテムの個数を管理する
     private int[][] fieldNumber = new int[BOX_MAX][BOX_MAX]; //ボックスにどの値が格納されているかどうか管理するための配列
     private int[][] boxNumber = new int[BOX_MAX][BOX_MAX];
@@ -18,13 +18,15 @@ class NumberFallModel {
     private int level; //レベルを管理するための変数
     private int nowPanelFlag; //今の画面状況を管理するためのフラグ
     
-    private int buffX = 0;
-    private int buffY = 0;
+    private int buffX;
+    private int buffY;
     
     public NumberFallModel(NumberFallView view, NumberFallController controller){
 	this.view = view;
+	this.score = 0;
 	this.controller = controller;
 	this.createNewStage();
+	this.decideBoxNumber();
     }
     
     //配列に乱数で得た値を格納する
@@ -49,7 +51,6 @@ class NumberFallModel {
 		if(boxNumber[i][j] == boxNum){
 		    this.buffX = j;
 		    this.buffY = i;
-		    
 		    return;
 		}
 	    }
@@ -91,8 +92,11 @@ class NumberFallModel {
     
     //Controllerから来た数字を削除(184を代入することで削除扱いとする)
     public void removeNumber(int boxX, int boxY){
+	
 	boxNumberToArray(boxX);
-	fieldNumber[buffY][buffX] = EMPTY;	
+	
+	fieldNumber[buffY][buffX] = EMPTY;
+	System.out.println(fieldNumber[buffY][buffX]);
 	boxNumberToArray(boxY);
 	fieldNumber[buffY][buffX] = EMPTY;
     }
@@ -106,6 +110,8 @@ class NumberFallModel {
 		}
 	    }
 	}
+	this.changeBoxNumber();
+	//this.view.paint();
 	this.printField();
     }
     //削除された分の乱数を生成する
@@ -129,11 +135,13 @@ class NumberFallModel {
 	int buffUpBox;
         int buffDownBox;
 	buffUpBox = buffY;
-        for(int i = y; buffUpBox - 1 >= 0; i--){
+        for(int i = y; buffUpBox - 1 > 0; i--){
             buffUpBox = i - 2;
             buffDownBox = i - 1;
 	    //System.out.println("チェック : "+ fieldNumber[buffUpBox][x] +", "+fieldNumber[buffDownBox][x]);
             if(fieldNumber[buffUpBox][x] == fieldNumber[buffDownBox][x]){
+		System.out.println("score += "+fieldNumber[buffUpBox][x]);
+		this.score += fieldNumber[buffUpBox][x];
 		fieldNumber[buffUpBox][x] = EMPTY;
 		fieldNumber[buffDownBox][x] = EMPTY;
             }
@@ -210,7 +218,24 @@ class NumberFallModel {
             }
         }
     }
-
+    //コントローラからきたボックス番号のペアの中身が一致しているかをチェックし、
+    //一致しているならデリートする
+    public void checkClickedNumber(int box1, int box2){
+	if(this.throwNumber[box1] == this.throwNumber[box2]){
+	    System.out.println("一致しました");
+	    this.removeNumber(box1, box2);
+	    this.checkField(box1,box2);
+	    this.changeBoxNumber();
+	    this.fallNumber(box1,box2);
+	    this.changeBoxNumber();
+	    this.addNumber();  
+	    this.view.setModel(this);
+	    System.out.println("score = "+score);
+	}else{
+	    System.out.println("一致しません");
+	}
+	this.view.paint();
+    }
     //getterメソッド
     public int getScore(){
 	return this.score;
