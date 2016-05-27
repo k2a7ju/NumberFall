@@ -4,15 +4,15 @@ public class NumberFall {
     private NumberFallController controller;
 
     public NumberFall(){
-	this.view = new NumberFallView();
 	this.controller = new NumberFallController();
+	this.view = new NumberFallView();
 	this.model = new NumberFallModel(this.view, this.controller);
 	view.setModel(this.model);
 	view.setController(this.controller);
 	controller.setModel(this.model);
 	controller.setView(this.view);
-	view.setValue();
-	view.practiceStart();
+	//view.setValue();
+
 	/*
 	  V =new v;
 	  C = new c;
@@ -29,7 +29,7 @@ public class NumberFall {
 	play.run();
     }
     public void run(){
-	
+	view.practiceStart();	
     }
 
 

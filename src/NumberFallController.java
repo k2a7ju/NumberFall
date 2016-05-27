@@ -1,4 +1,6 @@
-//コントローラー
+/*
+  NumberFallController.javaの実装
+*/
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.BorderLayout;
@@ -57,12 +59,6 @@ public class NumberFallController implements MouseListener{
 		      clickCount++;
 		  }else if(clickCount == 1){
 		      box2 = boxNumber;
-		      if(this.box1 > this.box2){
-			  int buff;
-			  buff = box1;
-			  box1 = box2;
-			  box2 = box1;
-		      }
 		      System.out.println("box2= "+box2);
 		      this.clickCount = 0;
 		  }
@@ -74,7 +70,10 @@ public class NumberFallController implements MouseListener{
 	  model.checkClickedNumber(box1,box2);
       }
     }
-    
+    public void resetBox(){
+	this.box1 = 0;
+	this.box2 = 0;
+    }
 
     public void mouseEntered(MouseEvent e){
 	
@@ -98,9 +97,13 @@ public class NumberFallController implements MouseListener{
     }
     public void pushedShuffleButton(){
 	System.out.println("入った");
+	this.model.setScore(this.model.getScore() + 100);
+	System.out.println("score = "+this.model.getScore());
+	this.model.reduceItem();
 	this.model.shuffleField();
-	model.printField();
+	//model.printField();
     }
+
     public void paint(){
 	this.view.paint();
     }

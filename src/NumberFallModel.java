@@ -22,8 +22,9 @@ class NumberFallModel {
     private int buffY;
     
     public NumberFallModel(NumberFallView view, NumberFallController controller){
+	this.itemQuantity = 5;
 	this.view = view;
-	this.score = 0;
+	this.score = 100;
 	this.controller = controller;
 	this.createNewStage();
 	this.decideBoxNumber();
@@ -34,14 +35,11 @@ class NumberFallModel {
 	Random rand = new Random();
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
-		fieldNumber[i][j] = rand.nextInt(9);
+		fieldNumber[i][j] = rand.nextInt(BOX_MAX - 1) + 1;
 	    }
 	}
 	
 	this.changeBoxNumber();
-
-	System.out.println("createNewStageにて");
-	printField();
     }
     
     //ボックス番号→配列
@@ -59,7 +57,7 @@ class NumberFallModel {
 
     //配列→ボックス番号
     public int arrayToBoxNumber(int x, int y){
-	System.out.println(boxNumber[y][x]);
+	//System.out.println(boxNumber[y][x]);
 	return boxNumber[y][x];
     }
     
@@ -96,7 +94,7 @@ class NumberFallModel {
 	boxNumberToArray(boxX);
 	
 	fieldNumber[buffY][buffX] = EMPTY;
-	System.out.println(fieldNumber[buffY][buffX]);
+	//System.out.println(fieldNumber[buffY][buffX]);
 	boxNumberToArray(boxY);
 	fieldNumber[buffY][buffX] = EMPTY;
     }
@@ -117,7 +115,7 @@ class NumberFallModel {
     //削除された分の乱数を生成する
     public int addRandomNumber(){
 	Random rand = new Random();
-	int random = rand.nextInt(BOX_MAX);
+	int random = rand.nextInt(BOX_MAX - 1) + 1;
 	return random;
     }
     
@@ -140,8 +138,9 @@ class NumberFallModel {
             buffDownBox = i - 1;
 	    //System.out.println("チェック : "+ fieldNumber[buffUpBox][x] +", "+fieldNumber[buffDownBox][x]);
             if(fieldNumber[buffUpBox][x] == fieldNumber[buffDownBox][x]){
-		System.out.println("score += "+fieldNumber[buffUpBox][x]);
+		//System.out.println("score += "+fieldNumber[buffUpBox][x]);
 		this.score += fieldNumber[buffUpBox][x];
+		this.view.setModel(this);
 		fieldNumber[buffUpBox][x] = EMPTY;
 		fieldNumber[buffDownBox][x] = EMPTY;
             }
@@ -230,11 +229,18 @@ class NumberFallModel {
 	    this.changeBoxNumber();
 	    this.addNumber();  
 	    this.view.setModel(this);
-	    System.out.println("score = "+score);
+	    //System.out.println("score = "+score);
 	}else{
 	    System.out.println("一致しません");
 	}
 	this.view.paint();
+	this.controller.resetBox();
+    }
+    //アイテムの個数を減らすメソッド
+    public void reduceItem(){
+	if(itemQuantity > 0){//0より大きいとき
+	    this.itemQuantity--;//1つ減らす
+	}
     }
     //getterメソッド
     public int getScore(){
@@ -252,6 +258,7 @@ class NumberFallModel {
     public int[] getThrowNumber(){
 	return this.throwNumber;
     }
+    
     //setterメソッド
     public void setScore(int score){
 	this.score = score;

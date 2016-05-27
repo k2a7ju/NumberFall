@@ -35,29 +35,15 @@ class GameFieldPanel extends JPanel {
 	Font font = new Font("Arial",Font.BOLD,30);
 	g2.setFont(font);
 	this.drawNumber();
-	/*
-	for(int y = 0; y < 384; y+= 64) {
-	    for(int x = 0; x < 384; x+= 64) {
-		g2d.drawString(String.valueOf(this.fieldNumber[count]), x + 23, y + 40);
-		count++;
-	    }
-	}
-	count = 1;
-	*/
     }
     public void drawNumber(){
-	System.out.println("drawNumber");
+	
 	count = 1;
 	this.fieldNumber = this.model.getThrowNumber();
 	
-	System.out.println("[1] = " + this.fieldNumber[1]);
 	for(int y = 0; y < 384; y+= 64) {
             for(int x = 0; x < 384; x+= 64) {
                 this.g2d.drawString(String.valueOf(this.fieldNumber[count]), x + 23, y + 40);
-                /*for(int i = 0; i < 36;i++){                                                                                                                                                    
-                    System.out.println("ああああああから"+this.fieldNumber[i]);                                                                                                                  
-                }                                                                                                                                                                                
-                */
                 count++;
             }
         }
