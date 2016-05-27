@@ -56,13 +56,7 @@ class NumberFallModel {
     }
 
     //配列→ボックス番号
-<<<<<<< HEAD
-    public int arrayToBoxNumber(int x, int y){
-	//System.out.println(boxNumber[y][x]);
-=======
     public int arrayToBoxNumber(int x, int y){//あり
-	System.out.println(boxNumber[y][x]);
->>>>>>> 0230ae92ef2d1d3c7dce5632af5c97913773e5ab
 	return boxNumber[y][x];
     }
     
