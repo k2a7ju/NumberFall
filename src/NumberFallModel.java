@@ -31,7 +31,7 @@ class NumberFallModel {
     }
     
     //配列に乱数で得た値を格納する
-    public void createNewStage(){
+    public void createNewStage(){//あり
 	Random rand = new Random();
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
@@ -43,7 +43,7 @@ class NumberFallModel {
     }
     
     //ボックス番号→配列
-    public void boxNumberToArray(int boxNum){
+    public void boxNumberToArray(int boxNum){//あり
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
 		if(boxNumber[i][j] == boxNum){
@@ -56,13 +56,18 @@ class NumberFallModel {
     }
 
     //配列→ボックス番号
+<<<<<<< HEAD
     public int arrayToBoxNumber(int x, int y){
 	//System.out.println(boxNumber[y][x]);
+=======
+    public int arrayToBoxNumber(int x, int y){//あり
+	System.out.println(boxNumber[y][x]);
+>>>>>>> 0230ae92ef2d1d3c7dce5632af5c97913773e5ab
 	return boxNumber[y][x];
     }
     
     //アイテムが使われたかどうかをチェック
-    public void checkItem(){
+    public void checkItem(){//あり
 	if(itemQuantity > 0){
 	    System.out.println("使える");
 	}
@@ -72,7 +77,7 @@ class NumberFallModel {
     }
     
     //配列に格納されている値をシャッフルする
-    public void shuffleField(){
+    public void shuffleField(){//あり
 	Random rand = new Random();
 	for(int i = fieldNumber.length * 6; i > 0; i--){
 	    int n1 = rand.nextInt(BOX_MAX);
@@ -89,7 +94,7 @@ class NumberFallModel {
     }
     
     //Controllerから来た数字を削除(184を代入することで削除扱いとする)
-    public void removeNumber(int boxX, int boxY){
+    public void removeNumber(int boxX, int boxY){//あり
 	
 	boxNumberToArray(boxX);
 	
@@ -100,7 +105,7 @@ class NumberFallModel {
     }
   
     //EMPTYに乱数を挿入する
-    public void addNumber(){
+    public void addNumber(){//あり
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0;j < BOX_MAX; j++){
 		if(this.fieldNumber[i][j] == EMPTY){
@@ -113,20 +118,20 @@ class NumberFallModel {
 	this.printField();
     }
     //削除された分の乱数を生成する
-    public int addRandomNumber(){
+    public int addRandomNumber(){//あり
 	Random rand = new Random();
 	int random = rand.nextInt(BOX_MAX - 1) + 1;
 	return random;
     }
     
     //削除された上部分にペアがないかを判断して値を削除    
-    public void checkField(int boxX,int boxY){
+    public void checkField(int boxX,int boxY){//あり
 	//boxX側の上
 	upRemove(boxX);
 	upRemove(boxY);
     }
     //上にペアがないか見てあればEMPTYを挿入
-    public void upRemove(int boxNum){
+    public void upRemove(int boxNum){//あり
 	boxNumberToArray(boxNum);
 	int x = buffX;
 	int y = buffY;
@@ -147,12 +152,12 @@ class NumberFallModel {
         }
 	return;
     }
-    public void fallNumber(int boxX, int boxY){
+    public void fallNumber(int boxX, int boxY){//あり
 	this.fall(boxX);
 	this.fall(boxY);
 	return;
     }
-    public void fall(int boxNum){
+    public void fall(int boxNum){//あり
 	int[] buff = new int[6];
 	int count = 0;
 	int count2 = 0;
@@ -181,7 +186,7 @@ class NumberFallModel {
 	return;
     }
     //配列からボックスの番号に変換
-    public void changeBoxNumber(){
+    public void changeBoxNumber(){//あり
  	int count = 1;
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
@@ -193,7 +198,7 @@ class NumberFallModel {
     }
 
     //スコア計算を行う
-    public void caluculateScore(int number,int kosu){
+    public void caluculateScore(int number,int kosu){//あり
         int zenscore = getScore();
         if(kosu==2){
             zenscore=number*10+zenscore;
@@ -203,12 +208,12 @@ class NumberFallModel {
         setScore(zenscore);
     }
     //レベルアップするかどうか
-    public void checkLevel(){
+    public void checkLevel(){//削除
 	
     }
 
     //ボックスに番号を振り分ける
-    public void decideBoxNumber(){
+    public void decideBoxNumber(){//
         int count = 1;
         for(int i = 0; i <BOX_MAX; i++){
             for(int j = 0; j < BOX_MAX; j++){
@@ -219,7 +224,7 @@ class NumberFallModel {
     }
     //コントローラからきたボックス番号のペアの中身が一致しているかをチェックし、
     //一致しているならデリートする
-    public void checkClickedNumber(int box1, int box2){
+    public void checkClickedNumber(int box1, int box2){//あり
 	if(this.throwNumber[box1] == this.throwNumber[box2]){
 	    System.out.println("一致しました");
 	    this.removeNumber(box1, box2);
@@ -243,36 +248,36 @@ class NumberFallModel {
 	}
     }
     //getterメソッド
-    public int getScore(){
+    public int getScore(){//あり
 	return this.score;
     }
-    public int[][] getFieldNumber(){
+    public int[][] getFieldNumber(){//あり
 	return this.fieldNumber;
     }
-    public int getLevel(){
+    public int getLevel(){//削除
 	return this.level;
     }
-    public int getNowPanelFlag(){
+    public int getNowPanelFlag(){//あり
 	return this.nowPanelFlag;
     }
-    public int[] getThrowNumber(){
+    public int[] getThrowNumber(){//
 	return this.throwNumber;
     }
     
     //setterメソッド
-    public void setScore(int score){
+    public void setScore(int score){//あり
 	this.score = score;
     }
-    public void setItemQuanitity(int itemQuantity){
+    public void setItemQuanitity(int itemQuantity){//あり
 	this.itemQuantity = itemQuantity;
     }
-    public void setFieldNumber(int[][] fieldNumber){
+    public void setFieldNumber(int[][] fieldNumber){//あり
 	this.fieldNumber = fieldNumber;
     }
-    public void setLevel(int level){
+    public void setLevel(int level){//削除
 	this.level = level;
     }
-    public void setNowPanelFlag(int flag){
+    public void setNowPanelFlag(int flag){//あり
 	this.nowPanelFlag = flag;
     }
     
