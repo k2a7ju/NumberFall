@@ -17,8 +17,7 @@ public class NumberFallController implements MouseListener{
     private int xa = 64,ya = 64;
     private int box1 = 0,box2 = 0;
     private int clickCount = 0;
-    private Point pointxy = new Point(0,0);
-
+    
     public int checkPair(int box1,int box2){
 	for(int i = 0; i < 6; i++){
 	    for(int j = 1 + 6 * i; j < 6 + 6 * i; j++){
@@ -27,15 +26,8 @@ public class NumberFallController implements MouseListener{
 		}
 	    }
 	}
-	//this.box1 = 0;
-	//this.box2 = 0;
-	//flag1 = 0;
-	//flag2 = 0;
 	return 0;
 	
-    }
-    public Point getPointxy(){
-	return pointxy;
     }
     public int getbox1(){
 	return box1;
@@ -47,9 +39,7 @@ public class NumberFallController implements MouseListener{
     public void mouseClicked(MouseEvent e){
       x = e.getX();
       y = e.getY();
-      pointxy = e.getPoint();
       int boxNumber = 1;
-      //System.out.println("X = "+x+"Y = "+y);
       for(int j = 0; j < 384;j = j + ya){
 	  for(int i = 0;i < 384; i = i + xa){
 	      if((x >= i && x < i + xa) && (y >= j && y < j + ya)){
@@ -97,8 +87,6 @@ public class NumberFallController implements MouseListener{
     }
     public void pushedShuffleButton(){
 	System.out.println("入った");
-	this.model.setScore(this.model.getScore() + 100);
-	System.out.println("score = "+this.model.getScore());
 	this.model.reduceItem();
 	this.model.shuffleField();
 	//model.printField();

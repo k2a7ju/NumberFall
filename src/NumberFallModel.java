@@ -24,14 +24,15 @@ class NumberFallModel {
     public NumberFallModel(NumberFallView view, NumberFallController controller){
 	this.itemQuantity = 5;
 	this.view = view;
-	this.score = 100;
+	this.score = 0;
+	this.itemQuantity = 0;
 	this.controller = controller;
 	this.createNewStage();
 	this.decideBoxNumber();
     }
     
     //配列に乱数で得た値を格納する
-    public void createNewStage(){//あり
+    public void createNewStage(){
 	Random rand = new Random();
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
@@ -43,7 +44,7 @@ class NumberFallModel {
     }
     
     //ボックス番号→配列
-    public void boxNumberToArray(int boxNum){//あり
+    public void boxNumberToArray(int boxNum){
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
 		if(boxNumber[i][j] == boxNum){
@@ -56,18 +57,12 @@ class NumberFallModel {
     }
 
     //配列→ボックス番号
-<<<<<<< HEAD
     public int arrayToBoxNumber(int x, int y){
-	//System.out.println(boxNumber[y][x]);
-=======
-    public int arrayToBoxNumber(int x, int y){//あり
-	System.out.println(boxNumber[y][x]);
->>>>>>> 0230ae92ef2d1d3c7dce5632af5c97913773e5ab
 	return boxNumber[y][x];
     }
     
     //アイテムが使われたかどうかをチェック
-    public void checkItem(){//あり
+    public void checkItem(){
 	if(itemQuantity > 0){
 	    System.out.println("使える");
 	}
@@ -77,7 +72,7 @@ class NumberFallModel {
     }
     
     //配列に格納されている値をシャッフルする
-    public void shuffleField(){//あり
+    public void shuffleField(){
 	Random rand = new Random();
 	for(int i = fieldNumber.length * 6; i > 0; i--){
 	    int n1 = rand.nextInt(BOX_MAX);
@@ -94,7 +89,7 @@ class NumberFallModel {
     }
     
     //Controllerから来た数字を削除(184を代入することで削除扱いとする)
-    public void removeNumber(int boxX, int boxY){//あり
+    public void removeNumber(int boxX, int boxY){
 	
 	boxNumberToArray(boxX);
 	
@@ -105,7 +100,7 @@ class NumberFallModel {
     }
   
     //EMPTYに乱数を挿入する
-    public void addNumber(){//あり
+    public void addNumber(){
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0;j < BOX_MAX; j++){
 		if(this.fieldNumber[i][j] == EMPTY){
@@ -118,20 +113,20 @@ class NumberFallModel {
 	this.printField();
     }
     //削除された分の乱数を生成する
-    public int addRandomNumber(){//あり
+    public int addRandomNumber(){
 	Random rand = new Random();
 	int random = rand.nextInt(BOX_MAX - 1) + 1;
 	return random;
     }
     
     //削除された上部分にペアがないかを判断して値を削除    
-    public void checkField(int boxX,int boxY){//あり
+    public void checkField(int boxX,int boxY){
 	//boxX側の上
 	upRemove(boxX);
 	upRemove(boxY);
     }
     //上にペアがないか見てあればEMPTYを挿入
-    public void upRemove(int boxNum){//あり
+    public void upRemove(int boxNum){
 	boxNumberToArray(boxNum);
 	int x = buffX;
 	int y = buffY;
@@ -141,10 +136,9 @@ class NumberFallModel {
         for(int i = y; buffUpBox - 1 > 0; i--){
             buffUpBox = i - 2;
             buffDownBox = i - 1;
-	    //System.out.println("チェック : "+ fieldNumber[buffUpBox][x] +", "+fieldNumber[buffDownBox][x]);
             if(fieldNumber[buffUpBox][x] == fieldNumber[buffDownBox][x]){
-		//System.out.println("score += "+fieldNumber[buffUpBox][x]);
-		this.score += fieldNumber[buffUpBox][x];
+		this.score += fieldNumber[buffUpBox][x] * 10;
+		this.view.paint();
 		this.view.setModel(this);
 		fieldNumber[buffUpBox][x] = EMPTY;
 		fieldNumber[buffDownBox][x] = EMPTY;
@@ -152,12 +146,12 @@ class NumberFallModel {
         }
 	return;
     }
-    public void fallNumber(int boxX, int boxY){//あり
+    public void fallNumber(int boxX, int boxY){
 	this.fall(boxX);
 	this.fall(boxY);
 	return;
     }
-    public void fall(int boxNum){//あり
+    public void fall(int boxNum){
 	int[] buff = new int[6];
 	int count = 0;
 	int count2 = 0;
@@ -186,7 +180,7 @@ class NumberFallModel {
 	return;
     }
     //配列からボックスの番号に変換
-    public void changeBoxNumber(){//あり
+    public void changeBoxNumber(){
  	int count = 1;
 	for(int i = 0; i < BOX_MAX; i++){
 	    for(int j = 0; j < BOX_MAX; j++){
@@ -198,7 +192,7 @@ class NumberFallModel {
     }
 
     //スコア計算を行う
-    public void caluculateScore(int number,int kosu){//あり
+    public void caluculateScore(int number,int kosu){
         int zenscore = getScore();
         if(kosu==2){
             zenscore=number*10+zenscore;
@@ -208,12 +202,12 @@ class NumberFallModel {
         setScore(zenscore);
     }
     //レベルアップするかどうか
-    public void checkLevel(){//削除
+    public void checkLevel(){
 	
     }
 
     //ボックスに番号を振り分ける
-    public void decideBoxNumber(){//
+    public void decideBoxNumber(){
         int count = 1;
         for(int i = 0; i <BOX_MAX; i++){
             for(int j = 0; j < BOX_MAX; j++){
@@ -224,7 +218,7 @@ class NumberFallModel {
     }
     //コントローラからきたボックス番号のペアの中身が一致しているかをチェックし、
     //一致しているならデリートする
-    public void checkClickedNumber(int box1, int box2){//あり
+    public void checkClickedNumber(int box1, int box2){
 	if(this.throwNumber[box1] == this.throwNumber[box2]){
 	    System.out.println("一致しました");
 	    this.removeNumber(box1, box2);
@@ -248,36 +242,39 @@ class NumberFallModel {
 	}
     }
     //getterメソッド
-    public int getScore(){//あり
+    public int getScore(){
 	return this.score;
     }
-    public int[][] getFieldNumber(){//あり
+    public int[][] getFieldNumber(){
 	return this.fieldNumber;
     }
-    public int getLevel(){//削除
+    public int getLevel(){
 	return this.level;
     }
-    public int getNowPanelFlag(){//あり
+    public int getNowPanelFlag(){
 	return this.nowPanelFlag;
     }
-    public int[] getThrowNumber(){//
+    public int[] getThrowNumber(){
 	return this.throwNumber;
+    }
+    public int getItemQuantity(){
+	return this.itemQuantity;
     }
     
     //setterメソッド
-    public void setScore(int score){//あり
+    public void setScore(int score){
 	this.score = score;
     }
-    public void setItemQuanitity(int itemQuantity){//あり
+    public void setItemQuanitity(int itemQuantity){
 	this.itemQuantity = itemQuantity;
     }
-    public void setFieldNumber(int[][] fieldNumber){//あり
+    public void setFieldNumber(int[][] fieldNumber){
 	this.fieldNumber = fieldNumber;
     }
-    public void setLevel(int level){//削除
+    public void setLevel(int level){
 	this.level = level;
     }
-    public void setNowPanelFlag(int flag){//あり
+    public void setNowPanelFlag(int flag){
 	this.nowPanelFlag = flag;
     }
     

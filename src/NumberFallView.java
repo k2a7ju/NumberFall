@@ -11,7 +11,6 @@ public class NumberFallView{
     private DrawPlay play;
     private int[] fieldNumber = new int[BOX_MAX];
     private int score;
-
     
     public void practiceStart(){
 	this.play = new DrawPlay(this.model, this.controller, this, this.fieldNumber, this.score);

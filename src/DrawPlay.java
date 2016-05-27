@@ -4,6 +4,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 public class DrawPlay {
+
     private NumberFallModel model;
     private NumberFallController controller;
     private NumberFallView view;
@@ -31,8 +32,7 @@ public class DrawPlay {
     }
     public void draw() {
 	this.fieldNumber = model.getThrowNumber();
-	this.score = model.getScore();
-	System.out.println("playのscore = " + model.getScore());
+
 				
 	this.frame = new JFrame();
 	frame.setTitle("NumberFall");
@@ -44,14 +44,15 @@ public class DrawPlay {
 	gameFieldPanel.addMouseListener(controller);
 	gameFieldPanel.setBounds(28,48,385,385);
 	frame.add(gameFieldPanel);
-        
-	scoreLabels[0] = new JLabel("シャッフル残数 :      ");
+
+	scoreLabels[0] = new JLabel("シャッフル残数 :      " + this.model.getItemQuantity());
 	scoreLabels[0].setBounds(WINDOW_WIDTH - 190, 70, 200, 30);
 	frame.add(scoreLabels[0]);
-	scoreLabels[1] = new JLabel("スコア :    "+String.valueOf(score));
+	scoreLabels[1] = new JLabel("スコア :    " + String.valueOf(this.score));
+	
 	scoreLabels[1].setBounds(WINDOW_WIDTH - 170, 100, 200, 30);
 	frame.add(scoreLabels[1]);
-        
+	this.resetLabel();  
 	byougaLabels = new JLabel(" Number Fall ");
 	byougaLabels.setBounds(WINDOW_WIDTH - 150, 250, 200, 30);
 	frame.add(byougaLabels);
@@ -61,31 +62,40 @@ public class DrawPlay {
 	    NumbershuffleButton.setFocusable(false);
 
 	    //シャッフルボタンが押されたとき
-	    NumbershuffleButton.addActionListener(new ActionListener(){
-		    public void actionPerformed(ActionEvent e){
+	    NumbershuffleButton.addActionListener(e -> {
 			//コントローラにボタンが押されたことを知らせる
 			controller.pushedShuffleButton();
+			
+			System.out.println(this.score);
 			gameFieldPanel.setFieldNumber(fieldNumber);
 			gameFieldPanel.drawNumber();
-			frame.repaint();
+			this.model.reduceItem();
+			
+			this.repaint();
+		}   
+		);
+	    frame.add(NumbershuffleButton);
+        
+	    GameCloseButton = new JButton("Game Close");
+	    GameCloseButton.setBounds(WINDOW_WIDTH - 120, WINDOW_HEIGHT - 50, 120, 30);
+	    GameCloseButton.setFocusable(false);
+	    GameCloseButton.addActionListener(new ActionListener(){
+		    public void actionPerformed(ActionEvent e){
+			System.exit(0);
 		    }
 		});
-	    
-	frame.add(NumbershuffleButton);
-        
-	GameCloseButton = new JButton("Game Close");
-	GameCloseButton.setBounds(WINDOW_WIDTH - 120, WINDOW_HEIGHT - 50, 120, 30);
-	GameCloseButton.setFocusable(false);
-	GameCloseButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    System.exit(0);
-                }
-            });
-	frame.add(GameCloseButton);
+	    frame.add(GameCloseButton);
             
 	frame.setVisible(true);
     }
+    public void resetLabel(){
+	scoreLabels[0].setText("シャッフル残数 :      "+ String.valueOf(this.model.getItemQuantity()));
+	System.out.println(this.model.getItemQuantity());
+	scoreLabels[1].setText("スコア :    " + String.valueOf(this.score));
+    }
     public void repaint(){
+	this.score = this.model.getScore();
+	this.resetLabel();
 	frame.repaint();
     }
     public void setValue(int[] number,int score){
