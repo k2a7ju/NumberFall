@@ -17,7 +17,11 @@ public class NumberFallController implements MouseListener{
     private int xa = 64,ya = 64;
     private int box1 = 0,box2 = 0;
     private int clickCount = 0;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ee071d6db08598530dfff6719ff2e96f47ac975e
     public int checkPair(int box1,int box2){
 	for(int i = 0; i < 6; i++){
 	    for(int j = 1 + 6 * i; j < 6 + 6 * i; j++){

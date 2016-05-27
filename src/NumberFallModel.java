@@ -57,7 +57,11 @@ class NumberFallModel {
     }
 
     //配列→ボックス番号
+<<<<<<< HEAD
     public int arrayToBoxNumber(int x, int y){
+=======
+    public int arrayToBoxNumber(int x, int y){//あり
+>>>>>>> ee071d6db08598530dfff6719ff2e96f47ac975e
 	return boxNumber[y][x];
     }
     
